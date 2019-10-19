@@ -15,6 +15,6 @@
     </fragment>
     <fragment
         android:id="@+id/dest_main_fragment"
-        android:name="tech.askru.MainFragment"
+        android:name="tech.askru.main.MainFragment"
         tools:layout="@layout/fragment_main" />
 </navigation>
