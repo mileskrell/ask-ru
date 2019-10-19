@@ -1,19 +1,45 @@
 package tech.askru.login
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
+import tech.askru.Repository
 
 class LoginViewModel : ViewModel() {
 
-    // we can observe this from LoginFragment to let us know when we've tried to log in
-    val numLoginTries = MutableLiveData(0)
+    private val repository = Repository()
 
-    suspend fun attemptLogin(username: String, password: String): Boolean {
-        delay(3000)
-        return false
+    lateinit var userToken: String
+
+    suspend fun attemptLogin(username: String, password: String): LoginResultType {
+        val response = try {
+            repository.authenticateUser(username, password)
+        } catch (e: RuntimeException) {
+            return LoginResultType.ERROR
+        }
+
+        // no error, and we're authenticated
+
+        userToken = response.token ?: return LoginResultType.ERROR // return error if somehow null
+
+        return LoginResultType.SUCCESS
     }
+
+    suspend fun attemptRegister(username: String, password: String): RegisterResultType {
+        try {
+            repository.createUser(username, password)
+        } catch (e: RuntimeException)  {
+            return RegisterResultType.ERROR
+        }
+
+        return RegisterResultType.SUCCESS
+    }
+}
+
+enum class RegisterResultType {
+    SUCCESS,
+    ERROR,
+}
+
+enum class LoginResultType {
+    SUCCESS,
+    ERROR, // represents incorrect username OR password
 }
