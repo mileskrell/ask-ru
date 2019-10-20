@@ -54,16 +54,19 @@ class SearchFragment : Fragment() {
         searchViewModel.searchResults.observe(this, Observer { searchResults ->
             // This if statement is because this method is annoyingly called on fragment creation
             // for some reason
+            searchResultsAdapter.loadNewData(searchResults)
 
-            if (searchResults.isEmpty()) {
-                if (edit_text_search.text.isNotEmpty()) {
-                    text_view_no_results.visibility = View.VISIBLE
-                    recycler_view_search_results.visibility = View.INVISIBLE
-                }
-            } else {
-                searchResultsAdapter.loadNewData(searchResults)
+            if (edit_text_search.text.isEmpty()) {
                 text_view_no_results.visibility = View.INVISIBLE
                 recycler_view_search_results.visibility = View.VISIBLE
+            } else {
+                if (searchResults.isEmpty()) {
+                    text_view_no_results.visibility = View.VISIBLE
+                    recycler_view_search_results.visibility = View.INVISIBLE
+                } else {
+                    recycler_view_search_results.visibility = View.VISIBLE
+                    text_view_no_results.visibility = View.INVISIBLE
+                }
             }
         })
 
@@ -74,11 +77,15 @@ class SearchFragment : Fragment() {
                 searchViewModel.searchText = s.toString()
                 if (s != null) {
                     searchViewModel.viewModelScope.launch {
+                        text_view_no_results.visibility = View.INVISIBLE
+                        recycler_view_search_results.visibility = View.INVISIBLE
+                        progress_bar_search.visibility = View.VISIBLE
                         if (s.isEmpty()) {
                             searchViewModel.listQuestions()
                         } else {
                             searchViewModel.searchQuestions(s.toString())
                         }
+                        progress_bar_search.visibility = View.INVISIBLE
                     }
                 }
             }

@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".main.pages.search.AllQuestionsFragment">
+    tools:context=".main.pages.search.SearchFragment">
 
     <EditText
         android:id="@+id/edit_text_search"
@@ -41,4 +41,14 @@
         app:layout_constraintEnd_toStartOf="@+id/recycler_view_search_results"
         app:layout_constraintStart_toEndOf="@+id/recycler_view_search_results"
         app:layout_constraintTop_toBottomOf="@+id/edit_text_search" />
+
+    <ProgressBar
+        android:id="@+id/progress_bar_search"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="@+id/text_view_no_results"
+        app:layout_constraintEnd_toStartOf="@+id/recycler_view_search_results"
+        app:layout_constraintStart_toEndOf="@+id/recycler_view_search_results"
+        app:layout_constraintTop_toTopOf="@+id/text_view_no_results" />
 </androidx.constraintlayout.widget.ConstraintLayout>
