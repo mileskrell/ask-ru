@@ -95,4 +95,18 @@ class SearchFragment : Fragment() {
 
         edit_text_search.setText(searchViewModel.searchText)
     }
+
+    fun refreshSearchResultsExternal() {
+        searchViewModel.viewModelScope.launch {
+            text_view_no_results.visibility = View.INVISIBLE
+            recycler_view_search_results.visibility = View.INVISIBLE
+            progress_bar_search.visibility = View.VISIBLE
+            if (edit_text_search.text.isEmpty()) {
+                searchViewModel.listQuestions()
+            } else {
+                searchViewModel.searchQuestions(edit_text_search.text.toString())
+            }
+            progress_bar_search.visibility = View.INVISIBLE
+        }
+    }
 }

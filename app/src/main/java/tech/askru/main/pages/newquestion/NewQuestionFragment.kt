@@ -20,11 +20,12 @@ import tech.askru.R
 import tech.askru.Repository
 import tech.askru.hideSoftKeyboard
 import tech.askru.login.LoginViewModel
+import tech.askru.main.MainFragment
 
 /**
  * A simple [Fragment] subclass.
  */
-class NewQuestionFragment : Fragment() {
+class NewQuestionFragment(val mainFragment: MainFragment) : Fragment() {
 
     lateinit var newQuestionViewModel: NewQuestionViewModel
     lateinit var loginViewModel: LoginViewModel
@@ -83,6 +84,7 @@ class NewQuestionFragment : Fragment() {
                         edit_text_new_question_body.text.clear()
                         Toast.makeText(context, "Question posted successfully", Toast.LENGTH_LONG)
                             .show()
+                        mainFragment.refreshSearchResultsExternal()
                     } else {
                         Toast.makeText(
                             context,
