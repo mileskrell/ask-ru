@@ -8,6 +8,9 @@ class NewQuestionViewModel : ViewModel() {
 
     private val repository = Repository.instance
 
+    var titleText = ""
+    var bodyText = ""
+
     /**
      * @return true if question created, false if an error
      */

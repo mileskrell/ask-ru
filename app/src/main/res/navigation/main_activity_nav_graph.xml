@@ -8,13 +8,36 @@
     <fragment
         android:id="@+id/dest_login_fragment"
         android:name="tech.askru.login.LoginFragment"
+        android:label="AskRU"
         tools:layout="@layout/fragment_login">
         <action
             android:id="@+id/action_loginFragment_to_mainFragment"
-            app:destination="@id/dest_main_fragment" />
+            app:destination="@id/dest_main_fragment"
+            app:enterAnim="@anim/slide_enter"
+            app:exitAnim="@anim/slide_exit"
+            app:popEnterAnim="@anim/slide_pop_enter"
+            app:popExitAnim="@anim/slide_pop_exit"/>
     </fragment>
     <fragment
         android:id="@+id/dest_main_fragment"
         android:name="tech.askru.main.MainFragment"
-        tools:layout="@layout/fragment_main" />
+        android:label="AskRU"
+        tools:layout="@layout/fragment_main">
+        <action
+            android:id="@+id/action_dest_main_fragment_to_dest_question_details_fragment"
+            app:destination="@id/dest_question_details_fragment"
+            app:enterAnim="@anim/slide_enter"
+            app:exitAnim="@anim/slide_exit"
+            app:popEnterAnim="@anim/slide_pop_enter"
+            app:popExitAnim="@anim/slide_pop_exit" />
+    </fragment>
+    <fragment
+        android:id="@+id/dest_question_details_fragment"
+        android:name="tech.askru.questiondetails.QuestionDetailsFragment"
+        android:label="Question details"
+        tools:layout="@layout/fragment_question_details">
+        <argument
+            android:name="question"
+            app:argType="tech.askru.api.Question" />
+    </fragment>
 </navigation>

@@ -1,9 +1,6 @@
 package tech.askru.api
 
-import retrofit2.http.Body
-import retrofit2.http.Header
-import retrofit2.http.POST
-import retrofit2.http.Query
+import retrofit2.http.*
 
 interface AskRUService {
 
@@ -19,11 +16,17 @@ interface AskRUService {
 //    @POST("questions/list")
 //    suspend fun listQuestionsAsync(): List<User>
 
-    @POST("questions/search")
+    @GET("questions/search")
     suspend fun searchQuestions(@Query("query") query: String): SearchQuestionsResponse
 
-    @POST("questions/oneById")
+    @GET("questions/list")
+    suspend fun listQuestions(): ListQuestionsResponse
+
+    @GET("questions/oneById")
     suspend fun getQuestionById(@Query("_id") id: String): GetQuestionByIdResponse
+
+    @GET("advice/oneById")
+    suspend fun getAdviceById(@Query("_id") id: String): GetAdviceByIdResponse
 
     /*
     You pass in the title and body (IN THE BODY), and the user's token as a header.
@@ -33,4 +36,7 @@ interface AskRUService {
      */
     @POST("questions/create")
     suspend fun createQuestion(@Body createQuestionBody: CreateQuestionBody, @Header("x-auth-token") userToken: String): CreateQuestionResponse
+
+    @POST("advice/create")
+    suspend fun createAdvice(@Body createAdviceBody: CreateAdviceBody, @Header("x-auth-token") userToken: String): CreateAdviceResponse
 }
