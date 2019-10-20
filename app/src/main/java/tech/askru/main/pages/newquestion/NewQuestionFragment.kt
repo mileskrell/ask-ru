@@ -34,7 +34,8 @@ class NewQuestionFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        newQuestionViewModel = ViewModelProviders.of(this).get(NewQuestionViewModel::class.java)
+        newQuestionViewModel =
+            ViewModelProviders.of(activity!!).get(NewQuestionViewModel::class.java)
         loginViewModel = ViewModelProviders.of(activity!!).get(LoginViewModel::class.java)
         return inflater.inflate(R.layout.fragment_new_question, container, false)
     }
@@ -43,11 +44,26 @@ class NewQuestionFragment : Fragment() {
 
         edit_text_new_question_title.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable?) {
-                button_post_question.isEnabled = edit_text_new_question_title.text.isNotEmpty()
+                newQuestionViewModel.titleText = s.toString()
+                button_post_question.isEnabled =
+                    edit_text_new_question_title.text?.isNotEmpty() == true && edit_text_new_question_body.text?.isNotEmpty() == true
             }
 
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
+        })
+
+        edit_text_new_question_body.addTextChangedListener(object : TextWatcher {
+            override fun afterTextChanged(s: Editable?) {
+                newQuestionViewModel.bodyText = s.toString()
+                button_post_question.isEnabled =
+                    edit_text_new_question_title.text?.isNotEmpty() == true && edit_text_new_question_body.text?.isNotEmpty() == true
+            }
+
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
+
         })
 
         button_post_question.setOnClickListener {
@@ -79,5 +95,8 @@ class NewQuestionFragment : Fragment() {
                 }
             }
         }
+
+        edit_text_new_question_title.setText(newQuestionViewModel.titleText)
+        edit_text_new_question_body.setText(newQuestionViewModel.bodyText)
     }
 }

@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import tech.askru.R
 import tech.askru.api.Question
 
-class SearchResultsAdapter : RecyclerView.Adapter<SearchResultsAdapter.SearchResultViewHolder>() {
+class SearchResultsAdapter(val onClickQuestion: (question: Question) -> Unit) : RecyclerView.Adapter<SearchResultsAdapter.SearchResultViewHolder>() {
 
     private var items = listOf<Question>()
 
@@ -27,10 +27,13 @@ class SearchResultsAdapter : RecyclerView.Adapter<SearchResultsAdapter.SearchRes
     override fun onBindViewHolder(holder: SearchResultViewHolder, position: Int) {
         holder.questionTitleTextView.text = items[position].title
         holder.questionBodyTextView.text = items[position].body
+        holder.itemView.setOnClickListener {
+            onClickQuestion(items[position])
+        }
     }
 
     class SearchResultViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val questionTitleTextView: TextView = itemView.findViewById(R.id.text_view_result_title)
-        val questionBodyTextView: TextView = itemView.findViewById(R.id.text_view_result_body)
+        val questionTitleTextView: TextView = itemView.findViewById(R.id.search_result_text_view_result_title)
+        val questionBodyTextView: TextView = itemView.findViewById(R.id.search_result_text_view_result_body)
     }
 }

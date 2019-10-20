@@ -34,11 +34,23 @@ class Repository {
         return service.searchQuestions(query)
     }
 
+    suspend fun listQuestions(): ListQuestionsResponse {
+        return service.listQuestions()
+    }
+
     suspend fun getQuestionById(id: String): GetQuestionByIdResponse {
         return service.getQuestionById(id)
     }
 
+    suspend fun getAdviceById(id: String): GetAdviceByIdResponse {
+        return service.getAdviceById(id)
+    }
+
     suspend fun createQuestion(title: String, body: String, userToken: String): CreateQuestionResponse {
         return service.createQuestion(CreateQuestionBody(title, body), userToken)
+    }
+
+    suspend fun createAdvice(questionId: String, adviceBody: String, userToken: String): CreateAdviceResponse {
+        return service.createAdvice(CreateAdviceBody(questionId, adviceBody), userToken)
     }
 }

@@ -78,25 +78,25 @@ class MainFragment : Fragment() {
                     }
                     true
                 }
-                R.id.menu_item_map_fragment -> {
-                    fragmentManager?.commit {
-                        hide(newQuestionFragment)
-                        hide(searchFragment)
-                        show(mapFragment)
-                        hide(topFragment)
-                    }
-                    true
-                }
-                R.id.menu_item_top_fragment -> {
-                    fragmentManager?.commit {
-
-                        hide(newQuestionFragment)
-                        hide(searchFragment)
-                        hide(mapFragment)
-                        show(topFragment)
-                    }
-                    true
-                }
+//                R.id.menu_item_map_fragment -> {
+//                    fragmentManager?.commit {
+//                        hide(newQuestionFragment)
+//                        hide(searchFragment)
+//                        show(mapFragment)
+//                        hide(topFragment)
+//                    }
+//                    true
+//                }
+//                R.id.menu_item_top_fragment -> {
+//                    fragmentManager?.commit {
+//
+//                        hide(newQuestionFragment)
+//                        hide(searchFragment)
+//                        hide(mapFragment)
+//                        show(topFragment)
+//                    }
+//                    true
+//                }
                 else -> false
             }
         }
