@@ -18,6 +18,7 @@ class MainActivity : AppCompatActivity() {
         setupActionBarWithNavController(navController, AppBarConfiguration(setOf(R.id.dest_login_fragment, R.id.dest_main_fragment)))
     }
 
+    // TODO: We can't close the app by pressing the back button
     override fun onSupportNavigateUp(): Boolean {
         return navController.navigateUp() || super.onSupportNavigateUp()
     }

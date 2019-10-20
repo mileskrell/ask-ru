@@ -9,8 +9,10 @@ import androidx.fragment.app.commit
 import androidx.lifecycle.ViewModelProviders
 import kotlinx.android.synthetic.main.fragment_main.*
 import tech.askru.R
+import tech.askru.hideSoftKeyboard
 import tech.askru.main.pages.MapFragment
-import tech.askru.main.pages.SearchFragment
+import tech.askru.main.pages.newquestion.NewQuestionFragment
+import tech.askru.main.pages.search.SearchFragment
 import tech.askru.main.pages.TopFragment
 
 /**
@@ -18,9 +20,10 @@ import tech.askru.main.pages.TopFragment
  */
 class MainFragment : Fragment() {
 
-    private val searchFragment = SearchFragment()
-    private val mapFragment = MapFragment()
-    private val topFragment = TopFragment()
+    lateinit var newQuestionFragment: NewQuestionFragment
+    lateinit var searchFragment: SearchFragment
+    lateinit var mapFragment: MapFragment
+    lateinit var topFragment: TopFragment
 
     lateinit var mainViewModel: MainViewModel
 
@@ -30,34 +33,64 @@ class MainFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        fragmentManager?.commit {
-            add(R.id.main_fragment_container, searchFragment)
-            add(R.id.main_fragment_container, mapFragment)
-            hide(mapFragment)
-            add(R.id.main_fragment_container, topFragment)
-            hide(topFragment)
+        if (savedInstanceState == null) {
+            newQuestionFragment = NewQuestionFragment()
+            searchFragment = SearchFragment()
+            mapFragment = MapFragment()
+            topFragment = TopFragment()
+
+            fragmentManager?.commit {
+                add(R.id.main_fragment_container, newQuestionFragment, "newQuestion")
+                hide(newQuestionFragment)
+                add(R.id.main_fragment_container, searchFragment, "search")
+                add(R.id.main_fragment_container, mapFragment, "map")
+                hide(mapFragment)
+                add(R.id.main_fragment_container, topFragment, "top")
+                hide(topFragment)
+            }
+            bottom_nav_view.selectedItemId = R.id.menu_item_search_fragment
+        } else {
+            newQuestionFragment = fragmentManager?.findFragmentByTag("newQuestion") as NewQuestionFragment
+            searchFragment = fragmentManager?.findFragmentByTag("search") as SearchFragment
+            mapFragment = fragmentManager?.findFragmentByTag("map") as MapFragment
+            topFragment = fragmentManager?.findFragmentByTag("top") as TopFragment
+            bottom_nav_view.selectedItemId = savedInstanceState.getInt("selectedItemId")
         }
 
         bottom_nav_view.setOnNavigationItemSelectedListener {
+            hideSoftKeyboard()
             when(it.itemId) {
-                R.id.dest_search_fragment -> {
+                R.id.menu_item_new_question_fragment -> {
                     fragmentManager?.commit {
+                        show(newQuestionFragment)
                         hide(mapFragment)
                         hide(topFragment)
-                        show(searchFragment)
-                    }
-                    true
-                }
-                R.id.dest_map_fragment -> {
-                    fragmentManager?.commit {
                         hide(searchFragment)
-                        hide(topFragment)
-                        show(mapFragment)
                     }
                     true
                 }
-                R.id.dest_top_fragment -> {
+                R.id.menu_item_search_fragment -> {
                     fragmentManager?.commit {
+                        hide(newQuestionFragment)
+                        show(searchFragment)
+                        hide(mapFragment)
+                        hide(topFragment)
+                    }
+                    true
+                }
+                R.id.menu_item_map_fragment -> {
+                    fragmentManager?.commit {
+                        hide(newQuestionFragment)
+                        hide(searchFragment)
+                        show(mapFragment)
+                        hide(topFragment)
+                    }
+                    true
+                }
+                R.id.menu_item_top_fragment -> {
+                    fragmentManager?.commit {
+
+                        hide(newQuestionFragment)
                         hide(searchFragment)
                         hide(mapFragment)
                         show(topFragment)
@@ -67,5 +100,9 @@ class MainFragment : Fragment() {
                 else -> false
             }
         }
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        outState.putInt("selectedItemId", bottom_nav_view.selectedItemId)
     }
 }

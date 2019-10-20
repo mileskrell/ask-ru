@@ -2,12 +2,15 @@ package tech.askru
 
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import tech.askru.api.AskRUService
-import tech.askru.api.AuthenticateUserResponse
-import tech.askru.api.CreateUserResponse
+import tech.askru.api.*
 
 
 class Repository {
+
+    companion object {
+        val instance = Repository()
+    }
+
     val service: AskRUService
 
     init {
@@ -25,5 +28,17 @@ class Repository {
 
     suspend fun createUser(username: String, password: String): CreateUserResponse {
         return service.createUserAsync(username, password)
+    }
+
+    suspend fun searchQuestions(query: String): SearchQuestionsResponse {
+        return service.searchQuestions(query)
+    }
+
+    suspend fun getQuestionById(id: String): GetQuestionByIdResponse {
+        return service.getQuestionById(id)
+    }
+
+    suspend fun createQuestion(title: String, body: String, userToken: String): CreateQuestionResponse {
+        return service.createQuestion(CreateQuestionBody(title, body), userToken)
     }
 }
