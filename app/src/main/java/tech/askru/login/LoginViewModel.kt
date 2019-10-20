@@ -5,7 +5,7 @@ import tech.askru.Repository
 
 class LoginViewModel : ViewModel() {
 
-    private val repository = Repository()
+    private val repository = Repository.instance
 
     lateinit var userToken: String
 
