@@ -56,8 +56,10 @@ class SearchFragment : Fragment() {
             // for some reason
 
             if (searchResults.isEmpty()) {
-                recycler_view_search_results.visibility = View.INVISIBLE
-                text_view_no_results.visibility = View.VISIBLE
+                if (edit_text_search.text.isNotEmpty()) {
+                    text_view_no_results.visibility = View.VISIBLE
+                    recycler_view_search_results.visibility = View.INVISIBLE
+                }
             } else {
                 searchResultsAdapter.loadNewData(searchResults)
                 text_view_no_results.visibility = View.INVISIBLE
