@@ -17,8 +17,10 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
             android:text="Advice"
             android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="@+id/advice_card_button_upvote"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -31,6 +33,7 @@
             android:layout_marginBottom="16dp"
             android:src="@drawable/ic_lobster_upvote"
             android:tooltipText="Upvote"
+            android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/advice_card_text_view_body" />
@@ -42,6 +45,7 @@
             android:layout_marginStart="8dp"
             android:src="@drawable/ic_goose_downvote"
             android:tooltipText="Downvote"
+            android:visibility="gone"
             app:layout_constraintStart_toEndOf="@+id/advice_card_button_upvote"
             app:layout_constraintTop_toTopOf="@+id/advice_card_button_upvote" />
     </androidx.constraintlayout.widget.ConstraintLayout>
