@@ -34,7 +34,7 @@ class MainFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         if (savedInstanceState == null) {
-            newQuestionFragment = NewQuestionFragment()
+            newQuestionFragment = NewQuestionFragment(this)
             searchFragment = SearchFragment()
             mapFragment = MapFragment()
             topFragment = TopFragment()
@@ -104,5 +104,9 @@ class MainFragment : Fragment() {
 
     override fun onSaveInstanceState(outState: Bundle) {
         outState.putInt("selectedItemId", bottom_nav_view.selectedItemId)
+    }
+
+    fun refreshSearchResultsExternal() {
+        searchFragment.refreshSearchResultsExternal()
     }
 }
